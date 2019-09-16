@@ -17,6 +17,13 @@
 		020BC0D3232B59D500FE6761 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BC0D2232B59D500FE6761 /* CollectionViewController.swift */; };
 		020BC0D7232B59FB00FE6761 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BC0D6232B59FB00FE6761 /* ImageService.swift */; };
 		020BC0D9232BC33D00FE6761 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BC0D8232BC33D00FE6761 /* Image.swift */; };
+		020BC101232BF98E00FE6761 /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BC100232BF98E00FE6761 /* ImageViewModel.swift */; };
+		020BC103232C384400FE6761 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BC102232C384400FE6761 /* TabBarViewController.swift */; };
+		020BC105232C38C700FE6761 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020BC104232C38C700FE6761 /* FavoriteViewController.swift */; };
+		0248184E232DA76800658CF2 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0248184D232DA76800658CF2 /* CacheManager.swift */; };
+		02481852232EAB0B00658CF2 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02481851232EAB0B00658CF2 /* ImageCollectionViewCell.swift */; };
+		02481854232FE01300658CF2 /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02481853232FE01300658CF2 /* KeychainPasswordItem.swift */; };
+		02481855232FE01300658CF2 /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02481853232FE01300658CF2 /* KeychainPasswordItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +51,12 @@
 		020BC0D2232B59D500FE6761 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		020BC0D6232B59FB00FE6761 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		020BC0D8232BC33D00FE6761 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		020BC100232BF98E00FE6761 /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
+		020BC102232C384400FE6761 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		020BC104232C38C700FE6761 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		0248184D232DA76800658CF2 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		02481851232EAB0B00658CF2 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		02481853232FE01300658CF2 /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				020BC0782329478F00FE6761 /* Assets.xcassets */,
+				02481851232EAB0B00658CF2 /* ImageCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -127,6 +141,7 @@
 		020BC0932329509700FE6761 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				020BC100232BF98E00FE6761 /* ImageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -135,7 +150,10 @@
 			isa = PBXGroup;
 			children = (
 				020BC0702329478E00FE6761 /* LogInViewController.swift */,
+				02481853232FE01300658CF2 /* KeychainPasswordItem.swift */,
 				020BC0D2232B59D500FE6761 /* CollectionViewController.swift */,
+				020BC102232C384400FE6761 /* TabBarViewController.swift */,
+				020BC104232C38C700FE6761 /* FavoriteViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -144,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				020BC0D6232B59FB00FE6761 /* ImageService.swift */,
+				0248184D232DA76800658CF2 /* CacheManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -249,12 +268,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				020BC103232C384400FE6761 /* TabBarViewController.swift in Sources */,
+				02481852232EAB0B00658CF2 /* ImageCollectionViewCell.swift in Sources */,
+				020BC101232BF98E00FE6761 /* ImageViewModel.swift in Sources */,
 				020BC0D9232BC33D00FE6761 /* Image.swift in Sources */,
 				020BC0D3232B59D500FE6761 /* CollectionViewController.swift in Sources */,
+				020BC105232C38C700FE6761 /* FavoriteViewController.swift in Sources */,
 				020BC0712329478E00FE6761 /* LogInViewController.swift in Sources */,
+				0248184E232DA76800658CF2 /* CacheManager.swift in Sources */,
 				020BC06F2329478E00FE6761 /* AppDelegate.swift in Sources */,
 				020BC0772329478E00FE6761 /* ProjectOut.xcdatamodeld in Sources */,
 				020BC0D7232B59FB00FE6761 /* ImageService.swift in Sources */,
+				02481854232FE01300658CF2 /* KeychainPasswordItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				020BC0872329479000FE6761 /* ProjectOutTests.swift in Sources */,
+				02481855232FE01300658CF2 /* KeychainPasswordItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

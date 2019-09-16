@@ -8,13 +8,17 @@
 
 import UIKit
 
+struct KeyChainConfiguration {
+    static let serviceName = "ProjectOut"
+    static let accessGroup: String? = nil
+}
 class LogInViewController: UIViewController {
     var titleLabel: UILabel!
     var userName: UITextField!
     var passWord: UITextField!
     var logIn: UIButton!
     var creatAccount: UIButton!
-    
+    var biometricButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -27,8 +31,7 @@ class LogInViewController: UIViewController {
     
     func loadTitle(){
         titleLabel = UILabel()
-        
-        view.addSubview(titleLabel)
+        self.view.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
@@ -40,12 +43,15 @@ class LogInViewController: UIViewController {
         titleLabel.text = "LOG IN"
         titleLabel.backgroundColor = .black
         titleLabel.textColor = .white
-        titleLabel.font = .systemFont(ofSize: 38)
+        // titleLabel.font = .systemFont(ofSize: 38)
+        titleLabel.font = UIFont.init(name: "Menlo", size: 38.0)
     }
     
     func loadUserName(){
         userName = UITextField()
         userName.translatesAutoresizingMaskIntoConstraints = false
+        userName.resignFirstResponder()
+        userName.autocapitalizationType = .none
         view.addSubview(userName)
         NSLayoutConstraint.activate([
             userName.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35),
@@ -57,6 +63,9 @@ class LogInViewController: UIViewController {
     }
     func loadPassword(){
         passWord = UITextField()
+        passWord.isSecureTextEntry = true
+        passWord.resignFirstResponder()
+        passWord.autocapitalizationType = .none
         passWord.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(passWord)
         NSLayoutConstraint.activate([
@@ -81,6 +90,26 @@ class LogInViewController: UIViewController {
         creatAccount.backgroundColor = .lightGray
         creatAccount.setTitle("Create", for: .normal)
         creatAccount.setTitleColor(.white, for: .normal)
+        creatAccount.addTarget(self, action: #selector (createAccount), for: .touchUpInside)
+        
+    }
+    @objc func createAccount () {
+        let newUserName = userName.text
+        let newPassWord = passWord.text!
+        let hasLogInKey = UserDefaults.standard.bool(forKey: "hasLogInKey")
+        if !hasLogInKey && userName.hasText {
+            UserDefaults.standard.setValue(newUserName, forKey: "username")
+        }
+        do {
+            let passwordItem = KeychainPasswordItem(service: KeyChainConfiguration.serviceName, account: newUserName!, accessGroup: KeyChainConfiguration.accessGroup)
+            try passwordItem.savePassword(newPassWord)
+        } catch {
+            fatalError("Error to update keychain: \(error)")
+        }
+        let vc = TabBarViewController()
+        present(vc, animated: true)
+        
+        
         
     }
     func loadLogInButton(){
@@ -96,7 +125,47 @@ class LogInViewController: UIViewController {
         logIn.backgroundColor = .lightGray
         logIn.setTitle("Log In", for: .normal)
         logIn.setTitleColor(.white, for: .normal)
+        logIn.addTarget(self, action: #selector(loadLogIn), for: .touchUpInside)
         
+    }
+    @objc func loadLogIn(){
+        
+        guard userName.text == UserDefaults.standard.value(forKey: "username") as? String else {
+            showLogInAlert()
+            return
+        }
+        do {
+            let passwordItem = KeychainPasswordItem(service: KeyChainConfiguration.serviceName, account: userName.text!, accessGroup: KeyChainConfiguration.accessGroup)
+            let keychainPassword = try passwordItem.readPassword()
+            if (keychainPassword == passWord.text) {
+                let vc = TabBarViewController()
+                present(vc, animated: true)
+            }
+            else {
+                showLogInAlert()
+            }
+        } catch {
+            fatalError("Error reading password in Keychain: \(error) ")
+        }
+    }
+    func loadBiometricButton(){
+        biometricButton = UIButton()
+        view.addSubview(biometricButton)
+        biometricButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            biometricButton.topAnchor.constraint(equalTo: creatAccount.bottomAnchor, constant: 50),
+            biometricButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 70),
+            biometricButton.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor),
+            biometricButton.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: 50)
+            ])
+        let bImage = UIImage(named: "Touch-icon-lg") as UIImage?
+        biometricButton.setImage(bImage, for: .normal)
+    }
+    func showLogInAlert (){
+        let alertView = UIAlertController(title: "Log In Fail", message: "Wrong UserName/PassWord", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Try Again", style: .default)
+        alertView.addAction(alertAction)
+        present(alertView, animated: true)
     }
 }
 
