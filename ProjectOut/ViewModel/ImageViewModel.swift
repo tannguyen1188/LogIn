@@ -10,21 +10,27 @@ import Foundation
 
 protocol ViewModelDelegate: class {
     var imageViewModel: ImageViewModel! {set get}
+    func updateView()
 }
+
 class ImageViewModel {
     let imageService: ImageProvider
 
     init(_ imageService: ImageProvider) {
         self.imageService = imageService
     }
-    var images = [Image]()
-    func download() {
-        self.imageService.getImage { [unowned self] ims in
-            self.images = ims
-            
+    weak var delegate: ViewModelDelegate?
+    var images = [Image]() {
+        didSet {
+            delegate?.updateView()
         }
     }
-    var cacheManager = CacheManager()
+    func download() {
+        imageService.getImage { [unowned self] ims in
+            self.images = ims
+            print("Image count: \(self.images.count)")
+        }
+    }
 }
 
 

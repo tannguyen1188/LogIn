@@ -8,16 +8,22 @@
 
 import Foundation
 
-protocol CacheService {
-    func downloadImage (_ thumbnailURL: String, completion: @escaping (Data?) -> Void)
-}
-class CacheManager: CacheService {
+//protocol CacheService {
+//    func downloadImage (_ thumbnailURL: String, completion: @escaping (Data?) -> Void)
+//}
+
+let cacheManager = CacheManager.shared
+
+final class CacheManager {
+    
+    static let shared = CacheManager()
+    
     let cache = NSCache<NSString, NSData>()
     let session = URLSession(configuration: .default)
     func downloadImage( _ thumbnailURL: String, completion: @escaping (Data?) -> Void) {
         // check if images exist on cache
         if let dataObject = cache.object(forKey: thumbnailURL as NSString){
-            completion(dataObject as NSData as Data)
+            completion(dataObject as Data)
             return
         }
         // check if url exists
@@ -26,7 +32,7 @@ class CacheManager: CacheService {
             return
         }
         //
-        session.dataTask(with: url) { (dat, _, err) in
+        session.dataTask(with: url) { [unowned self] (dat, _, err) in
             if err != nil {
                 completion (nil)
                 return

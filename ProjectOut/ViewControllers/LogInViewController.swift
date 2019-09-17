@@ -19,6 +19,7 @@ class LogInViewController: UIViewController {
     var logIn: UIButton!
     var creatAccount: UIButton!
     var biometricButton: UIButton!
+    var biometric = BioMetricAuth()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -27,6 +28,7 @@ class LogInViewController: UIViewController {
         loadPassword()
         loadCreateButton()
         loadLogInButton()
+        loadBiometricButton()
     }
     
     func loadTitle(){
@@ -43,7 +45,6 @@ class LogInViewController: UIViewController {
         titleLabel.text = "LOG IN"
         titleLabel.backgroundColor = .black
         titleLabel.textColor = .white
-        // titleLabel.font = .systemFont(ofSize: 38)
         titleLabel.font = UIFont.init(name: "Menlo", size: 38.0)
     }
     
@@ -94,24 +95,28 @@ class LogInViewController: UIViewController {
         
     }
     @objc func createAccount () {
+        
         let newUserName = userName.text
         let newPassWord = passWord.text!
-        let hasLogInKey = UserDefaults.standard.bool(forKey: "hasLogInKey")
-        if !hasLogInKey && userName.hasText {
-            UserDefaults.standard.setValue(newUserName, forKey: "username")
+        if ((!newUserName!.isEmpty) && (!newPassWord.isEmpty)){
+            let hasLogInKey = UserDefaults.standard.bool(forKey: "hasLogInKey")
+            if !hasLogInKey && userName.hasText {
+                UserDefaults.standard.setValue(newUserName, forKey: "username")
+            }
+            do {
+                let passwordItem = KeychainPasswordItem(service: KeyChainConfiguration.serviceName, account: newUserName!, accessGroup: KeyChainConfiguration.accessGroup)
+                try passwordItem.savePassword(newPassWord)
+            } catch {
+                fatalError("Error to update keychain: \(error)")
+            }
+            let vc = TabBarViewController()
+            present(vc, animated: true)
+        } else {
+            showCreateAlert()
         }
-        do {
-            let passwordItem = KeychainPasswordItem(service: KeyChainConfiguration.serviceName, account: newUserName!, accessGroup: KeyChainConfiguration.accessGroup)
-            try passwordItem.savePassword(newPassWord)
-        } catch {
-            fatalError("Error to update keychain: \(error)")
-        }
-        let vc = TabBarViewController()
-        present(vc, animated: true)
-        
-        
         
     }
+    
     func loadLogInButton(){
         logIn = UIButton()
         logIn.translatesAutoresizingMaskIntoConstraints = false
@@ -158,14 +163,41 @@ class LogInViewController: UIViewController {
             biometricButton.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor),
             biometricButton.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: 50)
             ])
-        let bImage = UIImage(named: "Touch-icon-lg") as UIImage?
-        biometricButton.setImage(bImage, for: .normal)
+        switch biometric.biometricType() {
+        case .faceID:
+            biometricButton.setImage(UIImage(named: "FaceIcon"), for: .normal)
+        case .touchID:
+            biometricButton.setImage(UIImage(named: "Touch-icon-lg"), for: .normal)
+        case .none:
+            biometricButton.isHidden = true
+        }
+        biometricButton.addTarget(self, action: #selector(dismissLogIn), for: .touchUpInside)
+    }
+    @objc func dismissLogIn() {
+        biometric.authenticateUser() {[unowned self] message in
+            if let message = message {
+                let alertView = UIAlertController(title: "Error",
+                                                  message: message,
+                                                  preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Fail", style: .default)
+                alertView.addAction(okAction)
+            } else {
+            let vc = TabBarViewController()
+                self.present(vc, animated: true)
+        }
+    }
     }
     func showLogInAlert (){
         let alertView = UIAlertController(title: "Log In Fail", message: "Wrong UserName/PassWord", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "Try Again", style: .default)
         alertView.addAction(alertAction)
         present(alertView, animated: true)
+    }
+    func showCreateAlert(){
+        let alertView = UIAlertController(title: "Fail creating account", message: "Please fill in username and password", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Try again", style: .default)
+        alertView.addAction(alertAction)
+        present(alertView, animated:  true)
     }
 }
 

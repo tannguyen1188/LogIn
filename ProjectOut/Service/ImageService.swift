@@ -30,6 +30,7 @@ class ImageService: ImageProvider {
             do {
                 let reply = try JSONDecoder().decode([Image].self, from: dat)
                 completion(reply)
+                print(reply.count)
             }
             catch {
                 print("error: = \(error)")
@@ -38,10 +39,4 @@ class ImageService: ImageProvider {
             }
         }.resume()
     }
-    
-    
-    
-    
-    
-    
 }

@@ -9,9 +9,12 @@
 import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
-    
-    var cacheManager = CacheManager()
-    
+//    let cacheManager: CacheService
+//
+//    super .init(_ cacheManager: CacheService) {
+//        self.cacheManager = cacheManager
+//    }
+//
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         return imageView
@@ -25,7 +28,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
                     self.imageView.image = imag
                 }
             }
-            
+
         }
     }
 //        set {
@@ -49,6 +52,10 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         super .init(coder: aDecoder)
+    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
     }
     static let identifier = "ImageCollectionViewCell"
 }

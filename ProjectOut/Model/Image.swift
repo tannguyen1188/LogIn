@@ -12,10 +12,10 @@ import Foundation
 
 struct Image: Decodable {
     let thumbnailUrl: String
-    let name: String
+//    let name: String
     
     enum CodingKeys: String, CodingKey {
         case thumbnailUrl
-        case name
+//        case name
     }
 }
