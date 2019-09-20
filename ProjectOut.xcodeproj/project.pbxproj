@@ -25,6 +25,8 @@
 		02481854232FE01300658CF2 /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02481853232FE01300658CF2 /* KeychainPasswordItem.swift */; };
 		02481855232FE01300658CF2 /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02481853232FE01300658CF2 /* KeychainPasswordItem.swift */; };
 		02481857233049F100658CF2 /* IDAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02481856233049F100658CF2 /* IDAuthentication.swift */; };
+		024818592331244900658CF2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024818582331244900658CF2 /* DetailViewController.swift */; };
+		0248185B2331F97F00658CF2 /* CoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0248185A2331F97F00658CF2 /* CoreManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		02481851232EAB0B00658CF2 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		02481853232FE01300658CF2 /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
 		02481856233049F100658CF2 /* IDAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDAuthentication.swift; sourceTree = "<group>"; };
+		024818582331244900658CF2 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		0248185A2331F97F00658CF2 /* CoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +161,7 @@
 				020BC0D2232B59D500FE6761 /* CollectionViewController.swift */,
 				020BC102232C384400FE6761 /* TabBarViewController.swift */,
 				020BC104232C38C700FE6761 /* FavoriteViewController.swift */,
+				024818582331244900658CF2 /* DetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -166,6 +171,7 @@
 			children = (
 				020BC0D6232B59FB00FE6761 /* ImageService.swift */,
 				0248184D232DA76800658CF2 /* CacheManager.swift */,
+				0248185A2331F97F00658CF2 /* CoreManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -280,10 +286,12 @@
 				020BC105232C38C700FE6761 /* FavoriteViewController.swift in Sources */,
 				020BC0712329478E00FE6761 /* LogInViewController.swift in Sources */,
 				0248184E232DA76800658CF2 /* CacheManager.swift in Sources */,
+				0248185B2331F97F00658CF2 /* CoreManager.swift in Sources */,
 				020BC06F2329478E00FE6761 /* AppDelegate.swift in Sources */,
 				020BC0772329478E00FE6761 /* ProjectOut.xcdatamodeld in Sources */,
 				020BC0D7232B59FB00FE6761 /* ImageService.swift in Sources */,
 				02481854232FE01300658CF2 /* KeychainPasswordItem.swift in Sources */,
+				024818592331244900658CF2 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

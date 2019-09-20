@@ -9,7 +9,13 @@
 import XCTest
 @testable import ProjectOut
 
-class ProjectOutTests: XCTestCase {
+class ProjectOutTests: XCTestCase, ImageViewModelDelegate{
+    var imageViewModel: ImageViewModel!
+    
+    func updateView() {
+        fatalError()
+    }
+    
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -18,10 +24,25 @@ class ProjectOutTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+    func testCanParseJSON() {
+        
+        // parse some JSON
+        // ensure we always have 50-images
+    }
 
-    func testExample() {
+    func testCanReceiveRemoteData() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        imageViewModel = ImageViewModel(ImageService())
+        var photos = [Image]()
+        let promise = expectation(description: "Download JSON")
+        imageViewModel.imageService.getImage{ pho in
+            photos = pho
+            promise.fulfill()
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+        XCTAssert(!photos.isEmpty)
     }
 
     func testPerformanceExample() {

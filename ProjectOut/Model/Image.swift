@@ -11,11 +11,29 @@ import Foundation
 
 
 struct Image: Decodable {
-    let thumbnailUrl: String
-//    let name: String
     
+    let thumbnailUrl: String
+    let url: String
+    let title: String
     enum CodingKeys: String, CodingKey {
         case thumbnailUrl
-//        case name
+        case url
+        case title
+    }
+    init(from core: CoreData){
+        let title = core.value(forKey: "title") as! String
+        let url = core.value(forKey: "url") as! String
+        let thumbnailUrl = core.value(forKey: "thumbnailUrl") as! String
+        self.title = title
+        self.url = url
+        self.thumbnailUrl = thumbnailUrl
+    }
+}
+
+extension Image: Equatable {
+    static func ==(lhs: Image, rhs: Image) -> Bool {
+        return lhs.thumbnailUrl == rhs.thumbnailUrl
+            && lhs.url == rhs.url
+            && lhs.title == rhs.title
     }
 }

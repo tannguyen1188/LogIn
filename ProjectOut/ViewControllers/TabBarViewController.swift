@@ -14,22 +14,12 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         let collectionViewController = CollectionViewController()
         let favoriteViewController = FavoriteViewController()
+        let collNav = UINavigationController(rootViewController: collectionViewController)
+        let favsNav = UINavigationController(rootViewController: favoriteViewController)
         
         collectionViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
        favoriteViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
-        let viewControllerList: [UIViewController] = [collectionViewController, favoriteViewController]
+        let viewControllerList: [UIViewController] = [collNav, favsNav]
         setViewControllers(viewControllerList, animated: false)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

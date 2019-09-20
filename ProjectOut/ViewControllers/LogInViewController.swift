@@ -38,11 +38,12 @@ class LogInViewController: UIViewController {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
             titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 100),
-            titleLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 200.00),
+            titleLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -100 ),
             titleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 100.00)
             
             ])
         titleLabel.text = "LOG IN"
+        titleLabel.textAlignment = .center
         titleLabel.backgroundColor = .black
         titleLabel.textColor = .white
         titleLabel.font = UIFont.init(name: "Menlo", size: 38.0)
@@ -85,7 +86,7 @@ class LogInViewController: UIViewController {
         NSLayoutConstraint.activate([
             creatAccount.topAnchor.constraint(equalTo: passWord.bottomAnchor, constant: 35),
             creatAccount.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50),
-            creatAccount.widthAnchor.constraint(lessThanOrEqualToConstant: 100),
+           // creatAccount.widthAnchor.constraint(lessThanOrEqualToConstant: 100), //?
             creatAccount.heightAnchor.constraint(equalToConstant: 30)
             ])
         creatAccount.backgroundColor = .lightGray
@@ -125,6 +126,7 @@ class LogInViewController: UIViewController {
             logIn.topAnchor.constraint(equalTo: passWord.bottomAnchor, constant: 35),
             logIn.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -50),
             logIn.leftAnchor.constraint(equalTo: creatAccount.rightAnchor, constant: 20),
+            logIn.widthAnchor.constraint(equalTo: creatAccount.widthAnchor, multiplier: 1.0),
             logIn.heightAnchor.constraint(equalToConstant: 30)
             ])
         logIn.backgroundColor = .lightGray
@@ -159,8 +161,9 @@ class LogInViewController: UIViewController {
         biometricButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             biometricButton.topAnchor.constraint(equalTo: creatAccount.bottomAnchor, constant: 50),
-            biometricButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 70),
-            biometricButton.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor),
+            //biometricButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 70),
+            //biometricButton.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor),
+            biometricButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
             biometricButton.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: 50)
             ])
         switch biometric.biometricType() {
@@ -199,5 +202,6 @@ class LogInViewController: UIViewController {
         alertView.addAction(alertAction)
         present(alertView, animated:  true)
     }
+   
 }
 

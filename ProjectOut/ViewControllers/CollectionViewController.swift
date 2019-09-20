@@ -10,9 +10,10 @@ import UIKit
 
 class CollectionViewController: UIViewController {
     
-    var imageViewModel: ImageViewModel! {
+    var imageViewModel: ImageViewModel!
+    {
         didSet {
-            imageViewModel.delegate = self as? ViewModelDelegate
+            imageViewModel.delegate = self
         }
     }
     lazy var collectionView: UICollectionView = {
@@ -21,20 +22,24 @@ class CollectionViewController: UIViewController {
                                     collectionViewLayout: config)
         view.delegate = self
         view.dataSource = self
+        view.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         return view
         
     }()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
         imageViewModel = ImageViewModel(ImageService())
         imageViewModel.download()
-        definesPresentationContext = true
         buildCollectionView()
+        addLogOutButton()
     }
+    
     func buildCollectionView(){
+        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
@@ -44,7 +49,14 @@ class CollectionViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             ])
     }
-    
+    func addLogOutButton(){
+        let logOutButton = UIBarButtonItem(title: "Log Out", style: .done, target: self, action: #selector(loadLogOut))
+        navigationItem.rightBarButtonItem = logOutButton
+
+    }
+    @objc func loadLogOut(){
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension CollectionViewController: UICollectionViewDataSource{
@@ -67,7 +79,21 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
         let width = collectionView.frame.size.width / 3.0 - 9.0
         return CGSize(width: width, height: width)
     }
-    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //        return
-    //    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let detailVC = DetailViewController()
+        let cimage = imageViewModel.images[indexPath.row]
+        detailVC.imageViewModel = imageViewModel
+        imageViewModel.currentImage = cimage
+        // present(detailVC,animated: true)
+        show(detailVC, sender: nil)
+    }
+}
+extension CollectionViewController: ImageViewModelDelegate{
+    func updateView() {
+        DispatchQueue.main.async{
+            self.collectionView.reloadData()
+        }
+        
+    }
 }

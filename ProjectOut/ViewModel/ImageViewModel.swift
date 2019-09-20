@@ -8,21 +8,32 @@
 
 import Foundation
 
-protocol ViewModelDelegate: class {
-    var imageViewModel: ImageViewModel! {set get}
+protocol ImageViewModelDelegate: class {
+    var imageViewModel: ImageViewModel! {get set}
     func updateView()
 }
 
 class ImageViewModel {
+    
     let imageService: ImageProvider
 
     init(_ imageService: ImageProvider) {
         self.imageService = imageService
     }
-    weak var delegate: ViewModelDelegate?
+    let coreManager = CoreManager()
+    
+    weak var delegate: ImageViewModelDelegate?
+    
     var images = [Image]() {
         didSet {
             delegate?.updateView()
+        }
+    }
+    var currentImage: Image!
+    
+    var favoriteImages = [Image]() {
+        didSet {
+            NotificationCenter.default.post(name: Notification.Name("Core"), object: self)
         }
     }
     func download() {
@@ -30,6 +41,9 @@ class ImageViewModel {
             self.images = ims
             print("Image count: \(self.images.count)")
         }
+    }
+    func getCoreImage(){
+        favoriteImages = coreManager.reload()
     }
 }
 

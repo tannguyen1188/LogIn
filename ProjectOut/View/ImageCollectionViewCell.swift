@@ -22,7 +22,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     var image: Image? {
         didSet {
             let url = (image?.thumbnailUrl)!
-            cacheManager.downloadImage(url) {[unowned self] dat in
+            cacheManager.downloadImage(from: url) {[unowned self] dat in
                 if let data = dat {
                     let imag = UIImage(data: data)
                     self.imageView.image = imag
